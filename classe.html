@@ -28,16 +28,18 @@
     nav a:hover {
       text-decoration: underline;
     }
+    #chart-container {
+      width: 100%;
+      height: 600px;
+      margin-bottom: 40px;
+    }
     footer {
-      margin-top: 30px;
+      margin-top: 40px;
       padding-top: 10px;
       border-top: 1px solid #ccc;
       font-size: 0.9em;
       color: #555;
-    }
-    #chart-container {
-      width: 100%;
-      height: 600px;
+      clear: both;
     }
   </style>
 </head>
@@ -45,8 +47,7 @@
 
   <nav>
     <a href="index.html">Início</a>
-    <a href="atributos.html">Distribuição de atributos</a>
-    <a href="classe.html">Distribuição de pontos de classe</a>
+    <a href="atributos.html">Atributos</a>
     <a href="mapas.html">Mapas para UP</a>
     <a href="equipamentos.html">Equipamentos</a>
   </nav>
@@ -60,82 +61,52 @@
   <script>
     const ctx = document.getElementById('classeChart').getContext('2d');
 
-    const niveis = [10, 20, 30, 40, 50];
+    const habilidades = ['Perícia Direita', 'Perícia Esquerda', 'Envenenar Arma', 'Refletir Veneno', 'Explosão Tóxica', 'Névoa Tóxica', 'Furtividade', 'Tocaia', 'Desintoxicar'];
+    const niveis = [5, 5, 5, 10, 10, 10, 3, 1, 1];
 
-    const habilidadesData = {
-      labels: niveis,
-      datasets: [
-        {
-          label: 'Perícia Mão Direita',
-          data: [2, 5, 5, 5, 5],
-          borderColor: '#FF6384',
-          fill: false
-        },
-        {
-          label: 'Perícia Mão Esquerda',
-          data: [0, 2, 5, 5, 5],
-          borderColor: '#36A2EB',
-          fill: false
-        },
-        {
-          label: 'Envenenar Arma',
-          data: [0, 3, 5, 5, 5],
-          borderColor: '#FFCE56',
-          fill: false
-        },
-        {
-          label: 'Refletir Veneno',
-          data: [0, 0, 3, 7, 10],
-          borderColor: '#4BC0C0',
-          fill: false
-        },
-        {
-          label: 'Explosão Tóxica',
-          data: [0, 0, 2, 7, 10],
-          borderColor: '#9966FF',
-          fill: false
-        },
-        {
-          label: 'Névoa Tóxica',
-          data: [0, 0, 1, 5, 10],
-          borderColor: '#FF9F40',
-          fill: false
-        }
-      ]
+    const data = {
+      labels: habilidades,
+      datasets: [{
+        label: 'Nível da Habilidade',
+        data: niveis,
+        backgroundColor: '#36A2EB'
+      }]
     };
 
-    const classeChart = new Chart(ctx, {
-      type: 'line',
-      data: habilidadesData,
+    const config = {
+      type: 'bar',
+      data: data,
       options: {
         responsive: true,
         scales: {
+          y: {
+            beginAtZero: true,
+            max: 10,
+            title: {
+              display: true,
+              text: 'Nível'
+            }
+          },
           x: {
             title: {
               display: true,
-              text: 'Job Level'
+              text: 'Habilidades'
             }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Nível da Habilidade'
-            },
-            beginAtZero: true,
-            max: 10
           }
         },
         plugins: {
           legend: {
-            position: 'top'
+            display: false
           },
           title: {
             display: true,
-            text: 'Progressão de Habilidades de Classe por Job Level'
+            text: 'Distribuição Final de Pontos de Classe'
           }
         }
       }
-    });
+    };
+
+    new Chart(ctx, config);
   </script>
 
   <footer>
